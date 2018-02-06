@@ -1,131 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style type="text/css">
-    
-    html {    
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
-
-    body {
-        color: #222;
-        background-color: rgb(236,226,217);
-        margin: 0;
-        padding: 0;
-        min-height: 100%;
-        font-weight: bold;
-        font-size: 10pt;
-    }
-
-    img {
-        max-width: 100%;
-    }
-
-    #header {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        background-color: #3f2000;
-        color: white;
-        height: 56px;
-        display: flex;
-        flex-direction: row;
-        box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
-        align-items: center;
-        z-index: 10000;
-    }
-
-    #content {
-        position: absolute;
-        top: 56px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        overflow-x: hidden;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: row;
-        align-content: stretch;
-    }
-
-    #centerhead {
-        display: flex;
-        flex: 1;
-        justify-content: center;
-        font-weight: normal;
-        text-align: center;
-        flex-direction: column;
-    }
-
-    div.title {
-        display: block;
-        font-size: larger;
-        font-weight: bolder;
-    }
-
-    div.subtitle {
-        display: block;
-        font-size: smaller;
-    }
-
-    #about {
-        align-self: center;
-        padding: .5em;
-    }
-
-    #NaviationToolBar {
-        min-width: 220px;
-        max-width: 440px;
-        flex: 1 1 30%;
-        height: 100%;
-        min-height: 100%;
-        overflow-x: hidden;
-        overflow-y: auto;
-        border-right: 1px solid #aaa;
-        position: relative;
-    }
-
-    #map {
-        flex: 1 1 70%;
-    }
-
-
-    div.text {
-        padding: 1em;
-        font-weight: normal;
-        font-size: 12pt;
-    }
-
-  </style>
-  <meta charset="utf-8">
-
-  <title>The NaviationToolBar, Mapped</title>
-  <meta name="description" content="The LDS Standard Works, Mapped">
-  <meta name="author" content="Yue Shen">
-
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
-
+	<meter charset="utf-8"></meter>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<script src="js/scriptures.js" type="text/javascript"></script>
 </head>
 <body>
-    <div id="header">
-        <div id="crumb"></div>
-        <div id="centerhead">
-            <div class="title">The Globe</div>
-            <div class="subtitle">By Yue Shen</div>
-        </div>
-    </div>
-    <div id="content">
-        <div id="NaviationToolBar">
-          <button type="button">Locate Me!</button>
-          <button type="button">Extend Me!</button>
-        </div>
-        <div id="map"></div>
-    </div>
-    <script type="text/javascript">
+	<div id = "header">
+		<div id = "crumb"></div>
+		<div id = "centerhead">
+			<div id = "title">The Scriptures, Mapped</div>
+			<div id = "subtitle">Yue Shen</div>
+		</div>
+	</div>
+	<div id = "content">
+		<div id = "scriptures"></div>
+		<div id = "map"></div>
+	</div>
+	<script type="text/javascript">
+	function ready(eventHandler) {
+	  if (document.attachEvent ? document.readyState === "complete" : 
+	  	                         document.readyState !== "loading"){
+	    eventHandler();
+	  } else {
+	    document.addEventListener("DOMContentLoaded", eventHandler);
+	  }
+	}
+	ready(function(){
+		window.addEventListener("hashchange", Scriptures.onHashChanged);
+		Scriptures.init(Scriptures.onHashChanged); //why is init a function with (), but onHashChanged does not have ()
+	});
 
+	function initMap() {
+		var uluru = {lat: -25.363, lng: 131.044};
+		var map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 4,
+			center: uluru
+		});
+		var marker = new google.maps.Marker({
+			position: uluru,
+			map: map
+		});
+	}
+	</script>
+	<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVrFz6pyVtooI7emyrRWUDVi3tcCJMysY&callback=initMap">
     </script>
 </body>
 </html>
